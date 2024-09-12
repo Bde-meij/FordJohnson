@@ -23,24 +23,24 @@ a, b and c respectively
 143	|18	|13
 a	|b	|c
 2. sort the collection of largest of the pairs with a binary search,
-	the lower of the pair moves with its bigger counterpart
+the lower of the pair moves with its bigger counterpart
 13	|18	|143
 c	|b	|a
 3. we know 13 is lowest of the higher numbers, and we know its counterpart must be lower,
-	so we can safely place c before 13 without comparing any values. we now have:
+so we can safely place c before 13 without comparing any values. we now have:
 c 13 |18 |143
      |b  |a
 4. we continue in the spirit of the previous trick, where we try to ommit comparisons as
-	much as possible. If we would insert b, we only have to compare with 13 and can leave 18 and 
-	'c' out of the equation. However the next steps are more complicated, it quickly becomes inefficient
-	if you move along the pairs one by one. It is better to 'move along' the pairs with steps equal to 
-	the 'jacobsthal' numbers. (this is because of complicated number theory)
-	the first few numbers are: 0,1,1,3,5,11,21,43....
+much as possible. If we would insert b, we only have to compare with 13 and can leave 18 and 
+'c' out of the equation. However the next steps are more complicated, it quickly becomes inefficient
+if you move along the pairs one by one. It is better to 'move along' the pairs with steps equal to 
+the 'jacobsthal' numbers. (this is because of complicated number theory)
+the first few numbers are: 0,1,1,3,5,11,21,43....
 So we start with 'a'(19) instead, comparing to 18 gives us
 c 13 |18 a 143
      |b
 5. the next jacob would be a 5th lower number, but we dont have one in this example. the last jacob was 3,
-	so now we work our way back and check out the 2nd number which is b
+so now we work our way back and check out the 2nd number which is b
 'b'(7) is compared to 18, then 'c'(4) and then we are done:
 c b 13 18 a 143
 4 7 13 18 19 143
