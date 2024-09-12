@@ -1,7 +1,13 @@
 A C++ program which implements the Ford-Johnson algorithm,
 which can sort numbers, avoiding as many *comparisons* as possible.
 The algorithm is run twice, once with Vectors and once with Lists.
-I've timed these events and the results tell us something interesting (see below).
+I've timed these events and the results tell us something interesting.
+
+Conclusions (explained below):
+1. When a program depends on many iterations, vectors are superior to lists
+2. When a program has frequent memory assignments, its better to use lists
+3. ford-johnson can sort numbers in relatively very few comparisons, but loses practicality
+because of complexity and the many calculations required.
 
 how to use (in bash):
 Run 'make' from the main directory.
@@ -39,8 +45,8 @@ the first few numbers are: 0,1,1,3,5,11,21,43....
 So we start with 'a'(19) instead, comparing to 18 gives us
 c 13 |18 a 143
      |b
-5. the next jacob would be a 5th lower number, but we dont have one in this example. the last jacob was 3,
-so now we work our way back and check out the 2nd number which is b
+5. the next jacob would be a 5th lower number, but we dont have one in this example.
+The last jacob was 3, so now we work our way back and check out the 2nd number which is b.
 'b'(7) is compared to 18, then 'c'(4) and then we are done:
 c b 13 18 a 143
 4 7 13 18 19 143
@@ -62,10 +68,4 @@ to vectors, and there is no copy or delete action during this process).
 Because elements in a vector are 'next to each other' in memory, it is faster to iterate 
 through these elements in contrasts to lists (lists have to 'jump' to different memory 
 locations for each element). Also, with vectors we can directly say: 'I want the 5th element', 
-which allows us to ommit the iteration process.
-
-Conclusions:
-When a program depends on many iterations, vectors are superior
-When a program has frequent memory assignments, its better to use lists
-ford-johnson can sort numbers in relatively very few comparisons, but loses practicality
-because of the many calculations required.
+which allows us to sometimes omit the iteration process altogether.
