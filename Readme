@@ -1,0 +1,71 @@
+A C++ program which implements the Ford-Johnson algorithm,
+which can sort numbers, avoiding as many *comparisons* as possible.
+The algorithm is run twice, once with Vectors and once with Lists.
+I've timed these events and the results tell us something interesting (see below).
+
+how to use (in bash):
+Run 'make' from the main directory.
+run the program and give it some numbers like so:
+./fordjohnson 19 143 7 18 13 4 
+- each number has to be an individual argument, space seperated
+- increase the number of numbers with a handy command, for example: 
+./fordjohnson `shuf -i 1-100 -n 50 | tr "\n" " "`
+(generates 50 numbers between 1-100, seperated by spaces)
+
+ford-johnson:
+the algorithm is quite obscure and convoluted, I will try to be terse.
+for example I will use 19 143 7 18 13 4 as numbers
+1. split into pairs (19-143 first pair, 7-18 second pair etc... highest on 'top'):
+143	|18	|13
+19	|7	|4
+for demonstration purposes, lets call 19, 7 and 4 
+a, b and c respectively
+143	|18	|13
+a	|b	|c
+2. sort the collection of largest of the pairs with a binary search,
+	the lower of the pair moves with its bigger counterpart
+13	|18	|143
+c	|b	|a
+3. we know 13 is lowest of the higher numbers, and we know its counterpart must be lower,
+	so we can safely place c before 13 without comparing any values. we now have:
+c 13 |18 |143
+     |b  |a
+4. we continue in the spirit of the previous trick, where we try to ommit comparisons as
+	much as possible. If we would insert b, we only have to compare with 13 and can leave 18 and 
+	'c' out of the equation. However the next steps are more complicated, it quickly becomes inefficient
+	if you move along the pairs one by one. It is better to 'move along' the pairs with steps equal to 
+	the 'jacobsthal' numbers. (this is because of complicated number theory)
+	the first few numbers are: 0,1,1,3,5,11,21,43....
+So we start with 'a'(19) instead, comparing to 18 gives us
+c 13 |18 a 143
+     |b
+5. the next jacob would be a 5th lower number, but we dont have one in this example. the last jacob was 3,
+	so now we work our way back and check out the 2nd number which is b
+'b'(7) is compared to 18, then 'c'(4) and then we are done:
+c b 13 18 a 143
+4 7 13 18 19 143
+
+interesting:
+In this specific program -
+with smaller amounts of numbers, lists are faster (but not always).
+with large amounts, the vectors are always faster.
+
+I've done some research as to why;
+Vectors can take more time while adding new elements because their memory block can get 
+'full' and then have to find a new memory block (with consecutive memory locations), 
+bigger than the previous, copy everything over, and delete (free) the previous memblock.
+
+Adding elements to lists always takes roughly the same amount of time, because each next 
+element gets a memory location from anywhere (easier to find something suitable in contrast 
+to vectors, and there is no copy or delete action during this process).
+
+Because elements in a vector are 'next to each other' in memory, it is faster to iterate 
+through these elements in contrasts to lists (lists have to 'jump' to different memory 
+locations for each element). Also, with vectors we can directly say: 'I want the 5th element', 
+which allows us to ommit the iteration process.
+
+Conclusions:
+When a program depends on many iterations, vectors are superior
+When a program has frequent memory assignments, its better to use lists
+ford-johnson can sort numbers in relatively very few comparisons, but loses practicality
+because of the many calculations required.
