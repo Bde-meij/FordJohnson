@@ -37,8 +37,8 @@ so we can safely place c before 13 without comparing any values. we now have:
 c 13 |18 |143
      |b  |a
 4. we continue in the spirit of the previous trick, where we try to ommit comparisons as
-much as possible. If we would insert b, we only have to compare with 13 and can leave 18 and 
-'c' out of the equation. However the next steps are more complicated, it quickly becomes inefficient
+much as possible. If we would insert b, we only have to compare with 13 and maybe 'c'. 
+However the next steps are more complicated, it quickly becomes inefficient
 if you move along the pairs one by one. It is better to 'move along' the pairs with steps equal to 
 the 'jacobsthal' numbers. (this is because of complicated number theory)
 the first few numbers are: 0,1,1,3,5,11,21,43....
